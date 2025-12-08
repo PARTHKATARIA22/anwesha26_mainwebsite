@@ -32,7 +32,7 @@ export default function Signin() {
         if (redirectTo && redirectTo !== "/login") {
           router.replace(redirectTo);
         } else {
-          router.replace("/dashboard"); // fallback
+          router.replace("/profile"); // fallback
         }
       }
     }

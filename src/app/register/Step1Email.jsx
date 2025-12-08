@@ -90,7 +90,8 @@ export default function Step1EmailPassword({ next }) {
 
   const resendOtp = () => {
     setOtpSent(false);
-    sendOtp(new Event("submit"));
+    sendOtp({ preventDefault: () => {} });
+
   };
 
   return (

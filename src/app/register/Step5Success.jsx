@@ -10,7 +10,7 @@ export default function Step5({ anweshaId }) {
   const { currentUser } = useAuthUser();
 
   const displayId = anweshaId || currentUser?.anweshaId || "N/A";
-  const [countdown, setCountdown] = useState(20);
+  const [countdown, setCountdown] = useState(5);
 
   useEffect(() => {
     const interval = setInterval(() => {

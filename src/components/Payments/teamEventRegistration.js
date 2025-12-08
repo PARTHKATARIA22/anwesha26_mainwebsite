@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { AuthContext } from '../authContext'
+import { AuthContext } from '../../../../anwesha-frontend/components/authContext'
 const host = process.env.NEXT_PUBLIC_HOST
 
 function loadScript(src) {

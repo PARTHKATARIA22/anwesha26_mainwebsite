@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { AuthContext } from './authContext'
+import { AuthContext } from '../../../anwesha-frontend/components/authContext'
 
 function loadScript(src) {
     return new Promise((resolve) => {

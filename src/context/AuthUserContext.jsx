@@ -67,6 +67,7 @@ export function AuthUserProvider({ children }) {
 
       await setDoc(doc(db, "users", uid), userDoc);
       setCurrentUser(userDoc);
+      await auth.currentUser?.reload();
 
       toast.success("Account Created!");
       return userDoc;

@@ -15,7 +15,11 @@ export default function RegisterPage() {
   const { currentUser } = useAuthUser();
 
   useEffect(() => {
-    if (!currentUser) return;
+    if (!currentUser) {
+    setStep(1);
+    return;
+}
+
 
     switch (currentUser.status) {
       case "1":

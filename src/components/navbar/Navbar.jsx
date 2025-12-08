@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useAuthUser, logoutUser } from "@/context/AuthUserContext";
 import { useRouter, usePathname } from "next/navigation";
 import { useRive, useStateMachineInput } from "@rive-app/react-canvas";
+import {toast} from "react-hot-toast"
 
 const host = process.env.NEXT_PUBLIC_HOST;
 const STATE_MACHINE_NAME = "Basic State Machine";
