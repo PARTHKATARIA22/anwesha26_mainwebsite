@@ -1,7 +1,7 @@
 "use client";
 
 import { ClipboardList } from "lucide-react";
-import { useAuthUser } from "../../context/AuthUserContext";
+import { useAuthUser } from "../../../context/AuthUserContext";
 import toast from "react-hot-toast";
 
 export default function Step4({ next }) {

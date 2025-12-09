@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useAuthUser } from "../../context/AuthUserContext";
+import { useAuthUser } from "../../../context/AuthUserContext";
 import toast from "react-hot-toast";
 import { User, Calendar, Phone, MapPin } from "lucide-react";
 
