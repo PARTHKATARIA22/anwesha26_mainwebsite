@@ -29,7 +29,6 @@ export default function AllEventsPage() {
     }
   };
 
-  // Modern Badge Logic
   const getBadgeStyle = (cat) => {
     const base = "px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase border";
     switch(cat?.toLowerCase()) {
@@ -47,12 +46,14 @@ export default function AllEventsPage() {
   );
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white selection:bg-violet-500 selection:text-white pb-20">
+    // FIX: Using negative margins (-m-8) to expand outward over the white padding
+    // Added matching padding (p-8) so the content stays centered and neat
+    <div className="min-h-screen bg-slate-950 text-white selection:bg-violet-500 selection:text-white pb-20 -m-8 p-8 w-[calc(100%+4rem)]">
       
       {/* HERO SECTION */}
-      <div className="relative overflow-hidden bg-slate-900 py-20 px-6 sm:px-12 mb-12 border-b border-white/10">
+      <div className="relative overflow-hidden bg-slate-900 py-20 px-6 sm:px-12 mb-12 border-b border-white/10 -mx-8">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-violet-900/40 via-slate-950 to-slate-950 pointer-events-none" />
-        <div className="max-w-7xl mx-auto relative z-10">
+        <div className="w-full max-w-[1600px] mx-auto relative z-10">
           <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-400 to-white animate-gradient">
             FEST<span className="text-white">VERSE</span>
           </h1>
@@ -63,16 +64,14 @@ export default function AllEventsPage() {
       </div>
 
       {/* CARDS GRID */}
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="w-full max-w-[1600px] mx-auto px-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         
-        {/* Render Existing Events */}
         {events.map((event) => (
           <div 
             key={event.id} 
             onClick={() => setSelectedEvent(event)}
             className="group relative bg-slate-900/50 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden hover:border-violet-500/50 transition-all duration-500 hover:shadow-[0_0_30px_rgba(139,92,246,0.15)] cursor-pointer"
           >
-            {/* Image Container */}
             <div className="h-56 overflow-hidden relative">
               <img 
                 src={event.img_src || "https://images.unsplash.com/photo-1492684223066-81342ee5ff30"} 
@@ -85,7 +84,6 @@ export default function AllEventsPage() {
               </div>
             </div>
 
-            {/* Content */}
             <div className="p-6 relative -mt-10">
               <div className="flex justify-between items-end mb-2">
                 <h3 className="text-2xl font-bold text-white group-hover:text-violet-300 transition-colors">{event.Name}</h3>
@@ -114,7 +112,7 @@ export default function AllEventsPage() {
           </div>
         ))}
 
-        {/* --- THE NEW ADD EVENT CARD --- */}
+        {/* ADD EVENT CARD */}
         <Link 
             href="/admin/add-event"
             className="group relative h-full min-h-[400px] flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-white/20 hover:border-violet-500 bg-white/5 hover:bg-white/10 transition-all duration-300 backdrop-blur-sm cursor-pointer"
@@ -130,20 +128,18 @@ export default function AllEventsPage() {
 
       </div>
 
-      {/* CINEMATIC MODAL */}
+      {/* MODAL */}
       {selectedEvent && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
           <div className="absolute inset-0 bg-black/90 backdrop-blur-md" onClick={() => setSelectedEvent(null)} />
           
           <div className="relative bg-slate-900 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] animate-in fade-in zoom-in-95 duration-300 scrollbar-hide">
             
-            {/* Close Button */}
             <button onClick={() => setSelectedEvent(null)} className="absolute top-4 right-4 z-20 bg-black/50 p-2 rounded-full text-white/70 hover:text-white hover:bg-red-500 transition-all backdrop-blur-sm">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
 
             <div className="grid md:grid-cols-2">
-              {/* Left: Visuals */}
               <div className="relative h-64 md:h-auto min-h-[400px]">
                 <img src={selectedEvent.img_src} className="w-full h-full object-cover" alt="" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent md:bg-gradient-to-r" />
@@ -153,7 +149,6 @@ export default function AllEventsPage() {
                 </div>
               </div>
 
-              {/* Right: Info */}
               <div className="p-8 space-y-6 flex flex-col justify-center">
                 <p className="text-slate-300 text-lg leading-relaxed">{selectedEvent.Description}</p>
 
