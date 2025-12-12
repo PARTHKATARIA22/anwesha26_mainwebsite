@@ -1,26 +1,31 @@
 import crypto from "crypto";
-import { db } from "@/lib/firebaseConfig";
-import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  serverTimestamp
+} from "firebase/firestore";
+
+import { db } from "../../../../lib/firebaseConfig";
 
 export async function POST(req) {
   try {
     const body = await req.json();
 
-    const signCheck = crypto
+    //  Verify Razorpay Signature
+    const hash = crypto
       .createHmac("sha256", process.env.RAZORPAY_SECRET)
       .update(body.razorpay_order_id + "|" + body.razorpay_payment_id)
       .digest("hex");
 
-    if (signCheck !== body.razorpay_signature) {
+    if (hash !== body.razorpay_signature) {
       console.error("Signature mismatch");
       return Response.json({ success: false });
     }
 
-    // Save order
-    await setDoc(doc(db, "orders", body.razorpay_payment_id), {
+    await setDoc(doc(db, "payments", body.razorpay_payment_id), {
       userId: body.uid,
-      totalAmount: body.totalAmount,
       items: body.items,
+      totalAmount: body.totalAmount,
       orderId: body.razorpay_order_id,
       paymentId: body.razorpay_payment_id,
       createdAt: serverTimestamp(),
@@ -28,8 +33,9 @@ export async function POST(req) {
     });
 
     return Response.json({ success: true });
+
   } catch (err) {
-    console.error("Verification error:", err);
+    console.error("Error:", err);
     return Response.json({ success: false });
   }
 }

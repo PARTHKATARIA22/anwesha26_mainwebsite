@@ -25,7 +25,7 @@ export default function OrdersPage() {
     }
 
     const q = query(
-      collection(db, "orders"),
+      collection(db, "payments"),
       where("userId", "==", currentUser.uid),
       orderBy("createdAt", "desc")
     );

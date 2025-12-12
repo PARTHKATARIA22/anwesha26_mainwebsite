@@ -22,10 +22,10 @@ export default function ProductCard({ id, name, cost, img_src }) {
           <>
             <button onClick={() => removeFromCart(id)} className="btn-white">-</button>
             <span>{quantity}</span>
-            <button onClick={() => addToCart({ id, name, cost, img_src })} className="btn-white">+</button>
+            <button onClick={() => addToCart({ id, name, cost, img_src,type: "store" })} className="btn-white">+</button>
           </>
         ) : (
-          <button onClick={() => addToCart({ id, name, cost, img_src })} className="btn-white">
+          <button onClick={() => addToCart({ id, name, cost, img_src ,type: "store" })} className="btn-white">
             Add to cart
           </button>
         )}

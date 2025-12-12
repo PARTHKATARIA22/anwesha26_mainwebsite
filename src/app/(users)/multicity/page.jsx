@@ -1,65 +1,32 @@
 "use client";
 
-import styles from './all-multicity.module.css'
-import Image from 'next/image'
-import Link from 'next/link'
-import Head from 'next/head'
-import { useState } from "react"
-import MulticityItem from '../../../components/MulticityItem/index'
-// import MulticityItem from './MulticityItem'
-
-import { useAuthUser } from "@/context/AuthUserContext"
-import { db } from "@/lib/firebaseConfig"
-import { collection, addDoc } from "firebase/firestore"
-import toast from "react-hot-toast"
+import styles from './all-multicity.module.css';
+import Image from 'next/image';
+import Head from 'next/head';
+import { useState } from "react";
+import MulticityItem from '../../../components/MulticityItem';
+import { useAuthUser } from "@/context/AuthUserContext";
+import { useCart } from "@/context/CartContext";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const Multicity = () => {
 
     const { currentUser } = useAuthUser();
-
     const [selectedEvent, setSelectedEvent] = useState(null);
+    const openConfirm = async (event) => {
+        if (!currentUser) return toast.error("Login required");
 
-    // On clicking register → open popup (if logged in)
-    const openConfirm = (event) => {
-        setSelectedEvent(event);
+        setSelectedEvent(event); 
     };
 
-    // Firestore register logic
-    const confirmRegistration = async () => {
-        if (!currentUser) {
-            toast.error("Login required");
-            return;
-        }
-
-        try {
-            await addDoc(collection(db, "multicity"), {
-                userId: currentUser.uid,
-                userName: currentUser.personal?.fullName,
-                AnweshaId: currentUser.anweshaId,
-                email: currentUser.email,
-                phone: currentUser.contact?.phone,
-                college: currentUser.college?.name,
-                city: selectedEvent.city,
-                date: selectedEvent.date,
-                timestamp: new Date(),
-            });
-
-            toast.success("Successfully registered!");
-            setSelectedEvent(null);
-        } catch (error) {
-            console.error(error);
-            toast.error("Failed to register");
-        }
-    };
-
-
-    // dummy event array
     const events_temp = [
         {
             key: 1,
             city: 'BHU',
             date: '08/10/23',
             venue: 'ISI Kolkata',
+            cost: 999,
             poster: '/multicity/MulticityPosterKolkata.webp',
             registration_deadline: '06/10/23',
             registration_fee: 'Free',
@@ -69,10 +36,9 @@ const Multicity = () => {
                 { name: 'Raaj Harsh', phone: '7050277123' },
             ],
             completed: false,
-            register_link: '/newRegistrationPageRoute',
-            rulebook_link: 'https://bit.ly/AnweshaMulticity',
         },
-    ]
+    ];
+
 
     return (
         <div className={styles.container}>
@@ -134,12 +100,10 @@ const Multicity = () => {
                 ))}
             </div>
 
-            {/* 🔥 Modal Popup (Only visible on confirm) */}
             {selectedEvent && (
                 <div className={styles.modalOverlay}>
                     <div className={styles.modalBox}>
                         <h3>Confirm Registration?</h3>
-                        <p>You are registering for:</p>
                         <p className="font-bold">{selectedEvent.city}</p>
 
                         <div className={styles.modalActions}>
@@ -161,9 +125,6 @@ const Multicity = () => {
                 </div>
             )}
 
-            {/* ------------------------------------------------ */}
-            {/* Your original commented animation/parallax section stays untouched */}
-            {/* ------------------------------------------------ */}
 
             {/* 
             <Image alt="IIT Patna" src="/multicity/school.png" width={200} height={200} style={{ transform: 'translateX(-170px)' }} />
